@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+    <!--filter by part-->
+    <div class="row">
+      <div class="col-md-2"> Filter By : </div>
+      <div class="col-md-4"><input type='text' [(ngModel)]="listFilter"></div>
+    </div>
+    <!--filtered by part -->
+    <div class="row">
+      <div class="col-md-6">
+        <h4> Filtered by : {{listFilter}} </h4>
+      </div>
+    </div>
+    <div class="table-responsive"> <!--*ngIf='products.length'-->
+      <table class="table">
+        <thead>
+        <tr>
+          <!--first column-->
+          <th>
+            <button class="btn btn-primary" (click)="toggleImage()">
+              {{displayImage? 'Hide':'Show'}} Image
+            </button>
+          </th>
+          <!--all columns-->
+          <th> Product</th>
+          <th> Code </th>
+          <th> Available </th>
+          <th> Price </th>
+          <th> 5 Star Rating</th>
+        </tr>
+        </thead>
+      <tbody *ngFor="let product of filteredProducts">
+        <!--tr is a row , so now we will be defining a row and td will be the cells-->
+       <tr >
+          <td> <img [src]="product.imageUrl" [title]="product.productName" [style.width.px]="imagewidth" [style.margin.px]="imagemargin" *ngIf="displayImage"> </td>
+         <td> <a [routerLink]="['/products',product.productId]"> {{product.productName}}</a></td>
+          <td> {{product.productCode | ConvertToSpaces:'-'}}</td>
+          <td> {{product.releaseDate}}</td>
+          <td> {{product.price }}</td>
+          <td> <app-star [rating]="product.starRating" (notification)="onNotify($event)"></app-star></td>
+
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
